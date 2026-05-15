@@ -23,7 +23,6 @@ import javafx.util.Duration;
 import org.w3c.dom.css.*;
 
 import javax.sound.sampled.*;
-import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.MouseEvent;
@@ -956,7 +955,7 @@ public class NormalMode extends Application {
                 gameZone.setVisible(true);
                 gameZone.setOpacity(100);
                 // 2. Use the specialized constructor for reliability
-                FadeTransition fadeIn = new FadeTransition(Duration.seconds(4), gameZone); // Duration/2 because rate is 2
+                FadeTransition fadeIn = new FadeTransition(Duration.seconds(10), gameZone); // Duration/2 because rate is 2
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);
                 fadeIn.setRate(1);

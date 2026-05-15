@@ -8,7 +8,7 @@ public class TankPlayer {
     //Data Field
     private Group tank = new Group();
     private Group weapon = new Group();
-    private int weaponNumber = 4;
+    private int weaponNumber = 0;
     private Rectangle body = new Rectangle();
     private Circle turret = new Circle();
     private Circle shield = new Circle();
