@@ -8,10 +8,9 @@ public class TankPlayer {
     //Data Field
     private Group tank = new Group();
     private Group weapon = new Group();
-    private int weaponNumber = 0;
+    private int weaponNumber = 5;
     private Rectangle body = new Rectangle();
     private Circle turret = new Circle();
-    private Circle shield = new Circle();
     private Color color;
     private double movingSpeed = 2;
     private double rotatingSpeed = 3;
@@ -122,6 +121,16 @@ public class TankPlayer {
                 hugeCannon.setX(0);
                 weapon.getChildren().add(hugeCannon);
                 weaponNumber = 4;
+                return weapon;
+            case 5:
+                Arc fanBlade1 = new Arc(6,0,6,4,0,180);
+                Arc fanBlade2 = new Arc(-2,-4,6,4,180,-180);
+                fanBlade2.setRotate(270);
+                Arc fanBlade3 = new Arc(2,8,6,4,180,-180);
+                fanBlade3.setRotate(90);
+                Arc fanBlade4 = new Arc(-6,4,6,4,0,180);
+                fanBlade4.setRotate(180);
+                weapon.getChildren().addAll(fanBlade1,fanBlade2,fanBlade3,fanBlade4);
                 return weapon;
         }
         return weapon;

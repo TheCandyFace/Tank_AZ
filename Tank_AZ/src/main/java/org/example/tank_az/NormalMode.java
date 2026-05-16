@@ -74,11 +74,14 @@ public class NormalMode extends Application {
     AudioCue reverseDirectionSound;
     AudioCue setMineSound;
     AudioCue explodeMineSound;
+    AudioCue fanSound;
+    AudioCue shieldActivation;
+    AudioCue shieldBreak;
 
     private int frameCountBox = 0;
     private int frameCountEnd = 0;
     private ArrayList<Circle> nukes = new ArrayList();
-    private ArrayList<Long> nukesTime = new ArrayList<Long>();
+    private ArrayList<Long> nukesTime = new ArrayList<>();
     double SPAWN_BOX_RATE;
     double TIME_AFTER_DEATH_RESTART;
     public NormalMode() {
@@ -93,7 +96,6 @@ public class NormalMode extends Application {
 
     @Override
     public void start(Stage stage) {
-        //loadAllMaps();
         gameContainer = new Pane();
         createGameZone();
         createPointZone();
@@ -124,6 +126,9 @@ public class NormalMode extends Application {
             URL url6 = getClass().getResource("/huh-meme.wav");
             URL url7 = getClass().getResource("/smoke-alarm-beep.wav");
             URL url8 = getClass().getResource("/boom-boom.wav");
+            URL url9 = getClass().getResource("/raaar_FerSY7o.wav");
+            URL url10 = getClass().getResource("/mag_forcefield.wav");
+            URL url11 = getClass().getResource("/fortnite-shield-break-sound.wav");
             if (url == null || url2 == null || url3 == null || url4 == null || url5 == null || url6 == null) {
                 System.out.println("file not found");
             }
@@ -136,6 +141,9 @@ public class NormalMode extends Application {
             reverseDirectionSound = AudioCue.makeStereoCue(url6, 2);
             setMineSound = AudioCue.makeStereoCue(url7,2);
             explodeMineSound = AudioCue.makeStereoCue(url8,2);
+            fanSound = AudioCue.makeStereoCue(url9,2);
+            shieldActivation = AudioCue.makeStereoCue(url10,2);
+            shieldBreak = AudioCue.makeStereoCue(url11, 2);
 
             // 3. Open the cue to prepare for playback
             deathSound.open();
@@ -146,6 +154,9 @@ public class NormalMode extends Application {
             reverseDirectionSound.open();
             setMineSound.open();
             explodeMineSound.open();
+            fanSound.open();
+            shieldBreak.open();
+            shieldActivation.open();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -430,6 +441,11 @@ public class NormalMode extends Application {
                         nukesTime.add(nukes.indexOf(node), System.currentTimeMillis());
                         projectiles.getChildren().add(node);
                         changePlayerWeapon(player1, 0);
+                    } else if (player1.getWeaponNumber() == 5) {
+                        fanSound.play();
+                        turnNodesAwayFromPoint(projectiles, player1.getX(), player1.getY());
+                        turnNodesAwayFromPoint(nukeShrapnels, player1.getX(), player1.getY());
+                        changePlayerWeapon(player1, 0);
                     } else {
                         projectiles.getChildren().add(node);
                     }
@@ -520,6 +536,11 @@ public class NormalMode extends Application {
                     nukes.add((Circle)node);
                     nukesTime.add(nukes.indexOf(node), System.currentTimeMillis());
                     projectiles.getChildren().add(node);
+                    changePlayerWeapon(player2, 0);
+                } else if (player2.getWeaponNumber() == 5) {
+                    fanSound.play();
+                    turnNodesAwayFromPoint(projectiles, player2.getX(), player2.getY());
+                    turnNodesAwayFromPoint(nukeShrapnels, player2.getX(), player2.getY());
                     changePlayerWeapon(player2, 0);
                 }  else {
                     projectiles.getChildren().add(node);
@@ -785,6 +806,7 @@ public class NormalMode extends Application {
     //In game events
     public void explode(TankPlayer player) {
         if (player.isHasShield()) {
+            shieldBreak.play();
             player.setHasShield(false);
             return;
         }
@@ -891,7 +913,7 @@ public class NormalMode extends Application {
         Rectangle box = new Rectangle(x, y, size, size);
         box.setStroke(Color.GREY);
 
-        int random = (int)(Math.random() * 7);
+        int random = (int)(Math.random() * 8);
 
         // Assign Type using UserData and set the visual color
         if (random == 0) {
@@ -912,8 +934,11 @@ public class NormalMode extends Application {
         } else if (random == 5) {
             box.setUserData("NUKE");
             box.setFill(Color.YELLOW);
-        } else {
+        } else if (random == 6) {
             box.setUserData("SHIELD");
+            box.setFill(Color.LIMEGREEN);
+        } else {
+            box.setUserData("FAN");
             box.setFill(Color.PURPLE);
         }
 
@@ -972,7 +997,10 @@ public class NormalMode extends Application {
                 player.setNumberOfBullets(player.getNumberOfBullets() - 1);
                 changePlayerWeapon(player,4);
             } else if (data.equals("SHIELD")) {
+                shieldActivation.play();
                 player.setHasShield(true);
+            } else if (data.equals("FAN")) {
+                changePlayerWeapon(player,5);
             }
         }
     }
@@ -1001,6 +1029,30 @@ public class NormalMode extends Application {
             nukeShrapnels.getChildren().add(shrapnel);
         }
     }
+    public void rotateNodes180(Group group) {
+        for (Node node : group.getChildren()) {
+            node.setRotate(node.getRotate() + 180);
+        }
+    }
+    public void turnNodesAwayFromPoint(Group group, double targetX, double targetY) {
+        for (Node node : group.getChildren()) {
+            // 1. Get the center position of the node in the group's coordinate space
+            Bounds bounds = node.getBoundsInParent();
+            double nodeCenterX = bounds.getMinX() + (bounds.getWidth() / 2.0);
+            double nodeCenterY = bounds.getMinY() + (bounds.getHeight() / 2.0);
+
+            // 2. Calculate the angle from the target point to the node center
+            double deltaX = nodeCenterX - targetX;
+            double deltaY = nodeCenterY - targetY;
+            double angleInRadians = Math.atan2(deltaY, deltaX);
+            double angleInDegrees = Math.toDegrees(angleInRadians);
+
+            // 3. Apply rotation (JavaFX 0 degrees points Right/East)
+            node.setRotate(angleInDegrees);
+        }
+    }
+
+
 
     public void getGridPosition(double x, double y) {
         // Basic integer division to find the cell
