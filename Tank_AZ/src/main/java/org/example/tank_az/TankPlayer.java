@@ -228,24 +228,24 @@ public class TankPlayer {
             case 1:
                 Circle bullet1 = new Circle(1);
                 bullet1.setRotate(angle);
-                bullet1.setLayoutX(getTank().getLayoutX() + Math.cos(Math.toRadians(angle)) * 12);
-                bullet1.setLayoutY(getTank().getLayoutY() + Math.sin(Math.toRadians(angle)) * 12);
+                bullet1.setLayoutX(getTank().getLayoutX() + Math.cos(Math.toRadians(angle)) * 14);
+                bullet1.setLayoutY(getTank().getLayoutY() + Math.sin(Math.toRadians(angle)) * 14);
                 Circle bullet2 = new Circle(1);
                 bullet2.setRotate(angle + 3);
-                bullet2.setLayoutX(getTank().getLayoutX() + Math.cos(Math.toRadians(angle)) * 12);
-                bullet2.setLayoutY(getTank().getLayoutY() + Math.sin(Math.toRadians(angle)) * 12);
+                bullet2.setLayoutX(getTank().getLayoutX() + Math.cos(Math.toRadians(angle)) * 14);
+                bullet2.setLayoutY(getTank().getLayoutY() + Math.sin(Math.toRadians(angle)) * 14);
                 Circle bullet3 = new Circle(1);
                 bullet3.setRotate(angle - 3);
-                bullet3.setLayoutX(getTank().getLayoutX() + Math.cos(Math.toRadians(angle)) * 12);
-                bullet3.setLayoutY(getTank().getLayoutY() + Math.sin(Math.toRadians(angle)) * 12);
+                bullet3.setLayoutX(getTank().getLayoutX() + Math.cos(Math.toRadians(angle)) * 14);
+                bullet3.setLayoutY(getTank().getLayoutY() + Math.sin(Math.toRadians(angle)) * 14);
                 Circle bullet4 = new Circle(1);
                 bullet4.setRotate(angle + 6);
-                bullet4.setLayoutX(getTank().getLayoutX() + Math.cos(Math.toRadians(angle)) * 12);
-                bullet4.setLayoutY(getTank().getLayoutY() + Math.sin(Math.toRadians(angle)) * 12);
+                bullet4.setLayoutX(getTank().getLayoutX() + Math.cos(Math.toRadians(angle)) * 14);
+                bullet4.setLayoutY(getTank().getLayoutY() + Math.sin(Math.toRadians(angle)) * 14);
                 Circle bullet5 = new Circle(1);
                 bullet5.setRotate(angle - 6);
-                bullet5.setLayoutX(getTank().getLayoutX() + Math.cos(Math.toRadians(angle)) * 12);
-                bullet5.setLayoutY(getTank().getLayoutY() + Math.sin(Math.toRadians(angle)) * 12);
+                bullet5.setLayoutX(getTank().getLayoutX() + Math.cos(Math.toRadians(angle)) * 14);
+                bullet5.setLayoutY(getTank().getLayoutY() + Math.sin(Math.toRadians(angle)) * 14);
                 numberOfBullets++;
                 return new Group(bullet1,bullet2,bullet3,bullet4,bullet5);
             case 2:

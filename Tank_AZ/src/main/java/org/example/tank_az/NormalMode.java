@@ -442,7 +442,7 @@ public class NormalMode extends Application {
                         projectiles.getChildren().add(node);
                         changePlayerWeapon(player1, 0);
                     } else if (player1.getWeaponNumber() == 5) {
-                        fanSound.play();
+                        fanSound.play(0.7);
                         turnNodesAwayFromPoint(projectiles, player1.getX(), player1.getY());
                         turnNodesAwayFromPoint(nukeShrapnels, player1.getX(), player1.getY());
                         changePlayerWeapon(player1, 0);
@@ -538,7 +538,7 @@ public class NormalMode extends Application {
                     projectiles.getChildren().add(node);
                     changePlayerWeapon(player2, 0);
                 } else if (player2.getWeaponNumber() == 5) {
-                    fanSound.play();
+                    fanSound.play(0.7);
                     turnNodesAwayFromPoint(projectiles, player2.getX(), player2.getY());
                     turnNodesAwayFromPoint(nukeShrapnels, player2.getX(), player2.getY());
                     changePlayerWeapon(player2, 0);
@@ -1019,7 +1019,7 @@ public class NormalMode extends Application {
         nukesTime.remove(i);
         nukes.remove(i);
         explodeMineSound.play();
-        for (int j = 0; j < 120; j++) {
+        for (int j = 0; j < 1000; j++) {
             Circle shrapnel = new Circle(2);
             double randomAngle = Math.random() * 360;
             shrapnel.setRotate(Math.random() * 360);
