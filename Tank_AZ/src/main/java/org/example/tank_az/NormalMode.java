@@ -1019,13 +1019,13 @@ public class NormalMode extends Application {
         nukesTime.remove(i);
         nukes.remove(i);
         explodeMineSound.play();
-        for (int j = 0; j < 1000; j++) {
+        for (int j = 0; j < 100; j++) {
             Circle shrapnel = new Circle(2);
             double randomAngle = Math.random() * 360;
             shrapnel.setRotate(Math.random() * 360);
             shrapnel.setLayoutX(explosionPositionX + Math.cos(Math.toRadians(randomAngle)) * 3);
             shrapnel.setLayoutY(explosionPositionY + Math.sin(Math.toRadians(randomAngle)) * 3);
-            shrapnelsSpeed.add(8.0);
+            shrapnelsSpeed.add(7.0);
             nukeShrapnels.getChildren().add(shrapnel);
         }
     }
